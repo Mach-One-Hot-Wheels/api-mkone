@@ -1,5 +1,5 @@
 -- Tabela User
-CREATE TABLE "User" (
+CREATE TABLE user (
     id SERIAL PRIMARY KEY,
     avatar_url VARCHAR(255),
     email VARCHAR(255) UNIQUE,
@@ -15,7 +15,7 @@ CREATE TABLE "User" (
 );
 
 -- Tabela Hotwheels
-CREATE TABLE Hotwheels (
+CREATE TABLE hotwheels (
     id SERIAL PRIMARY KEY,
     model_name VARCHAR(255),
     image_url VARCHAR(255),
@@ -72,10 +72,10 @@ CREATE TABLE collection_items (
 );
 
 -- Tabela Wishlist (Lista de desejos do usuário)
-CREATE TABLE Wishlist (
+CREATE TABLE wishlist (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
-    hotwheels_id INTEGER NOT NULL REFERENCES Hotwheels(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES user(id) ON DELETE CASCADE,
+    hotwheels_id INTEGER NOT NULL REFERENCES hotwheels(id) ON DELETE CASCADE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE
 );
