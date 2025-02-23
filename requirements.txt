@@ -1,3 +1,4 @@
 fastapi[standard]
 sqlalchemy
 pydantic-settings
+psycopg2

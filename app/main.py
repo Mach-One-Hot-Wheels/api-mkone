@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import users, hotwheels, collections, wishlists
+from app.db.base import Base  # Import Base
+from app.db.database import engine  # Import engine
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Mach One Hot Wheels API")
 
