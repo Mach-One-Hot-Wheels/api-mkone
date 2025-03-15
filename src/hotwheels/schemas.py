@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, HttpUrl, UUID4
-from typing import Optional, List
+from typing import Optional, List, Generic, TypeVar
 from datetime import datetime
 
 class HotwheelsBase(BaseModel):
@@ -74,3 +74,27 @@ class HotwheelsSearchParams(BaseModel):
     color: Optional[str] = None
     treasure_hunt: Optional[bool] = None
     super_treasure_hunt: Optional[bool] = None
+
+class HotwheelsSearchResponse(BaseModel):
+    id: UUID4
+    model_name: str
+    image_url: str | None
+    series: str | None
+    color: str | None
+    release_year: int | None
+
+class PaginationMeta(BaseModel):
+    """Metadata for pagination"""
+    total_items: int
+    total_pages: int
+    current_page: int
+    page_size: int
+    has_next: bool
+    has_prev: bool
+
+T = TypeVar('T')
+
+class PaginatedResponse(BaseModel, Generic[T]):
+    """Generic paginated response with items and metadata"""
+    items: List[T]
+    meta: PaginationMeta
