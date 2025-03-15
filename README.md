@@ -38,9 +38,6 @@ docker compose up -d
 python -m src.database
 ```
 
-3. Importe os dados iniciais:
-- Execute o notebook `other/convert_data.ipynb` para adicionar os dados dos Hot Wheels
-
 ## Notas
 - Certifique-se de ter o Docker instalado para a configuração do banco PostgreSQL
 - O ambiente virtual (.venv) deve estar ativo para todos os comandos Python
