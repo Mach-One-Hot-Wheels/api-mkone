@@ -15,3 +15,9 @@ class UserLogin(BaseModel):
 class UserPublic(BaseModel):
     id: UUID4
     email: EmailStr
+    nickname: str
+
+
+class TokenResponse(BaseModel):
+    user: UserPublic
+    token: str
