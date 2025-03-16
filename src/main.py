@@ -24,7 +24,7 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(hotwheels_router, prefix="/hotwheels", tags=["hotwheels"])
 app.include_router(collections_router, prefix="/collections", tags=["collections"])
 app.include_router(user_hotwheels_router, prefix="/user_hotwheels", tags=["user_hotwheels"])
-app.include_router(wishlist_router, prefix="/wishlist_router", tags=["wishlist_router"])
+app.include_router(wishlist_router, prefix="/wishlist", tags=["wishlist_router"])
 app.include_router(users_router, prefix="/users", tags=["users"])
 
 if __name__ == "__main__":
