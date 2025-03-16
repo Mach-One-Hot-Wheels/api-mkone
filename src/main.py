@@ -4,6 +4,7 @@ from src.hotwheels.router import router as hotwheels_router
 from src.collections.router import router as collections_router
 from src.user_hotwheels.router import router as user_hotwheels_router
 from src.wishlist.router import router as wishlist_router
+from src.users.router import router as users_router
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,7 +25,7 @@ app.include_router(hotwheels_router, prefix="/hotwheels", tags=["hotwheels"])
 app.include_router(collections_router, prefix="/collections", tags=["collections"])
 app.include_router(user_hotwheels_router, prefix="/user_hotwheels", tags=["user_hotwheels"])
 app.include_router(wishlist_router, prefix="/wishlist_router", tags=["wishlist_router"])
-
+app.include_router(users_router, prefix="/users", tags=["users"])
 
 if __name__ == "__main__":
     uvicorn.run("src.main:app")
