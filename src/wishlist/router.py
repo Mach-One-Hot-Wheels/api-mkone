@@ -29,9 +29,9 @@ def create_wishlist_item(wishlist: WishlistCreate, db: Session = Depends(get_ses
             detail="Item already exists in wishlist or invalid IDs"
         )
 
-@router.delete("/{wishlist_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_wishlist_item(wishlist_id: UUID, db: Session = Depends(get_session)):
-    wishlist_item = db.query(Wishlist).filter(Wishlist.id == wishlist_id).first()
+@router.delete("/{user_id}/{hotwheels_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_wishlist_item(user_id: UUID, hotwheels_id: UUID, db: Session = Depends(get_session)):
+    wishlist_item = db.query(Wishlist).filter(Wishlist.user_id == user_id, Wishlist.hotwheels_id == hotwheels_id).first()
     if not wishlist_item:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
