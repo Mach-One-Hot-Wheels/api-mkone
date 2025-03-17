@@ -7,7 +7,6 @@ class WishlistCreate(BaseModel):
     hotwheels_id: UUID
 
 class WishlistResponse(BaseModel):
-    id: UUID
     user_id: UUID
     hotwheels_id: UUID
     created_at: datetime
