@@ -108,21 +108,29 @@ async def check_user_has_hotwheels(
             UserHotwheels.user_id == user_id,
             UserHotwheels.hotwheels_id == hotwheels_id,
         )
-        .first() is not None
+        .first()
+        is not None
     )
-    
+
     return {"exists": exists}
 
 
 @router.delete("/{user_id}/{hotwheels_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user_hotwheels_item(user_id: UUID, hotwheels_id: UUID, db: Session = Depends(get_session)):
-    user_hotwheels_item = db.query(UserHotwheels).filter(UserHotwheels.user_id == user_id, UserHotwheels.hotwheels_id == hotwheels_id).first()
+def delete_user_hotwheels_item(
+    user_id: UUID, hotwheels_id: UUID, db: Session = Depends(get_session)
+):
+    user_hotwheels_item = (
+        db.query(UserHotwheels)
+        .filter(
+            UserHotwheels.user_id == user_id, UserHotwheels.hotwheels_id == hotwheels_id
+        )
+        .first()
+    )
     if not user_hotwheels_item:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="UserHotwheels item not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="UserHotwheels item not found"
         )
-    
+
     db.delete(user_hotwheels_item)
     db.commit()
     return None
