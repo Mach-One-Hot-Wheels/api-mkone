@@ -1,31 +1,31 @@
 from pydantic import BaseModel, Field, HttpUrl, UUID4
-from typing import Optional, List, Generic, TypeVar
+from typing import List, Generic, TypeVar
 from datetime import datetime
 
 class HotwheelsBase(BaseModel):
     """Base schema with common Hotwheels attributes"""
     model_name: str = Field(..., description="Name of the Hotwheels model", max_length=255)
-    image_url: Optional[HttpUrl] = Field(None, description="URL to the model image")
-    collector_number: Optional[str] = Field(None, description="Collector number", max_length=255)
-    series_number: Optional[str] = Field(None, description="Series number", max_length=255)
-    release_year: Optional[int] = Field(None, description="Year the model was released")
-    series: Optional[str] = Field(None, description="Series name", max_length=255)
-    color: Optional[str] = Field(None, description="Model color", max_length=255)
-    tampo: Optional[str] = Field(None, description="Model tampo/decals", max_length=255)
-    wheel_type: Optional[str] = Field(None, description="Type of wheels", max_length=100)
-    base_type: Optional[str] = Field(None, description="Type of base", max_length=100)
-    base_color: Optional[str] = Field(None, description="Color of the base", max_length=100)
-    window_color: Optional[str] = Field(None, description="Color of windows", max_length=100)
-    interior_color: Optional[str] = Field(None, description="Interior color", max_length=100)
-    toy_number: Optional[str] = Field(None, description="Toy number", max_length=100)
-    assortment_number: Optional[str] = Field(None, description="Assortment number", max_length=100)
-    scale: Optional[str] = Field(None, description="Model scale", max_length=100)
-    country: Optional[str] = Field(None, description="Country of manufacture", max_length=100)
-    base_codes: Optional[str] = Field(None, description="Base codes", max_length=100)
-    case_number: Optional[str] = Field(None, description="Case number", max_length=100)
-    notes: Optional[str] = Field(None, description="Additional notes", max_length=1000)
-    treasure_hunt_year: Optional[int] = Field(None, description="Year of treasure hunt designation")
-    super_treasure_hunt_year: Optional[int] = Field(None, description="Year of super treasure hunt designation")
+    image_url: HttpUrl | None = Field(None, description="URL to the model image")
+    collector_number: str | None = Field(None, description="Collector number", max_length=255)
+    series_number: str | None = Field(None, description="Series number", max_length=255)
+    release_year: int | None = Field(None, description="Year the model was released")
+    series: str | None = Field(None, description="Series name", max_length=255)
+    color: str | None = Field(None, description="Model color", max_length=255)
+    tampo: str | None = Field(None, description="Model tampo/decals", max_length=255)
+    wheel_type: str | None = Field(None, description="Type of wheels", max_length=100)
+    base_type: str | None = Field(None, description="Type of base", max_length=100)
+    base_color: str | None = Field(None, description="Color of the base", max_length=100)
+    window_color: str | None = Field(None, description="Color of windows", max_length=100)
+    interior_color: str | None = Field(None, description="Interior color", max_length=100)
+    toy_number: str | None = Field(None, description="Toy number", max_length=100)
+    assortment_number: str | None = Field(None, description="Assortment number", max_length=100)
+    scale: str | None = Field(None, description="Model scale", max_length=100)
+    country: str | None = Field(None, description="Country of manufacture", max_length=100)
+    base_codes: str | None = Field(None, description="Base codes", max_length=100)
+    case_number: str | None = Field(None, description="Case number", max_length=100)
+    notes: str | None = Field(None, description="Additional notes", max_length=1000)
+    treasure_hunt_year: int | None = Field(None, description="Year of treasure hunt designation")
+    super_treasure_hunt_year: int | None = Field(None, description="Year of super treasure hunt designation")
 
 class HotwheelsCreate(HotwheelsBase):
     """Schema for creating a new Hotwheels model"""
@@ -33,28 +33,28 @@ class HotwheelsCreate(HotwheelsBase):
 
 class HotwheelsUpdate(BaseModel):
     """Schema for updating an existing Hotwheels model"""
-    model_name: Optional[str] = Field(None, description="Name of the Hotwheels model", max_length=255)
-    image_url: Optional[HttpUrl] = Field(None, description="URL to the model image")
-    collector_number: Optional[str] = Field(None, description="Collector number", max_length=255)
-    series_number: Optional[str] = Field(None, description="Series number", max_length=255)
-    release_year: Optional[int] = Field(None, description="Year the model was released")
-    series: Optional[str] = Field(None, description="Series name", max_length=255)
-    color: Optional[str] = Field(None, description="Model color", max_length=255)
-    tampo: Optional[str] = Field(None, description="Model tampo/decals", max_length=255)
-    wheel_type: Optional[str] = Field(None, description="Type of wheels", max_length=100)
-    base_type: Optional[str] = Field(None, description="Type of base", max_length=100)
-    base_color: Optional[str] = Field(None, description="Color of the base", max_length=100)
-    window_color: Optional[str] = Field(None, description="Color of windows", max_length=100)
-    interior_color: Optional[str] = Field(None, description="Interior color", max_length=100)
-    toy_number: Optional[str] = Field(None, description="Toy number", max_length=100)
-    assortment_number: Optional[str] = Field(None, description="Assortment number", max_length=100)
-    scale: Optional[str] = Field(None, description="Model scale", max_length=100)
-    country: Optional[str] = Field(None, description="Country of manufacture", max_length=100)
-    base_codes: Optional[str] = Field(None, description="Base codes", max_length=100)
-    case_number: Optional[str] = Field(None, description="Case number", max_length=100)
-    notes: Optional[str] = Field(None, description="Additional notes", max_length=1000)
-    treasure_hunt_year: Optional[int] = Field(None, description="Year of treasure hunt designation")
-    super_treasure_hunt_year: Optional[int] = Field(None, description="Year of super treasure hunt designation")
+    model_name: str | None = Field(None, description="Name of the Hotwheels model", max_length=255)
+    image_url: HttpUrl | None = Field(None, description="URL to the model image")
+    collector_number: str | None = Field(None, description="Collector number", max_length=255)
+    series_number: str | None = Field(None, description="Series number", max_length=255)
+    release_year: int | None = Field(None, description="Year the model was released")
+    series: str | None = Field(None, description="Series name", max_length=255)
+    color: str | None = Field(None, description="Model color", max_length=255)
+    tampo: str | None = Field(None, description="Model tampo/decals", max_length=255)
+    wheel_type: str | None = Field(None, description="Type of wheels", max_length=100)
+    base_type: str | None = Field(None, description="Type of base", max_length=100)
+    base_color: str | None = Field(None, description="Color of the base", max_length=100)
+    window_color: str | None = Field(None, description="Color of windows", max_length=100)
+    interior_color: str | None = Field(None, description="Interior color", max_length=100)
+    toy_number: str | None = Field(None, description="Toy number", max_length=100)
+    assortment_number: str | None = Field(None, description="Assortment number", max_length=100)
+    scale: str | None = Field(None, description="Model scale", max_length=100)
+    country: str | None = Field(None, description="Country of manufacture", max_length=100)
+    base_codes: str | None = Field(None, description="Base codes", max_length=100)
+    case_number: str | None = Field(None, description="Case number", max_length=100)
+    notes: str | None = Field(None, description="Additional notes", max_length=1000)
+    treasure_hunt_year: int | None = Field(None, description="Year of treasure hunt designation")
+    super_treasure_hunt_year: int | None = Field(None, description="Year of super treasure hunt designation")
 
 class HotwheelsResponse(HotwheelsBase):
     """Schema for Hotwheels response including DB fields"""
@@ -63,17 +63,16 @@ class HotwheelsResponse(HotwheelsBase):
     update_at: datetime
     
     class Config:
-        orm_mode = True
         from_attributes = True
 
 class HotwheelsSearchParams(BaseModel):
     """Schema for search parameters"""
-    model_name: Optional[str] = None
-    release_year: Optional[int] = None
-    series: Optional[str] = None 
-    color: Optional[str] = None
-    treasure_hunt: Optional[bool] = None
-    super_treasure_hunt: Optional[bool] = None
+    model_name: str | None = None
+    release_year: int | None = None
+    series: str | None = None 
+    color: str | None = None
+    treasure_hunt: bool | None = None
+    super_treasure_hunt: bool | None = None
 
 class HotwheelsSearchResponse(BaseModel):
     id: UUID4

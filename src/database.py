@@ -4,7 +4,7 @@ from src.auth.models import User
 from src.hotwheels.models import Hotwheels
 from src.collections.models import Collection, CollectionItem
 from src.wishlist.models import Wishlist
-from src.user_hotwheels.models import UserHotwheels, UserHotwheelsSale
+from src.user_hotwheels.models import UserHotwheels #, UserHotwheelsSale
 from src.base import Base
 from dotenv import load_dotenv
 import pandas as pd

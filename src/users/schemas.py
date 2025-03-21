@@ -2,16 +2,17 @@ from pydantic import BaseModel
 from uuid import UUID
 from datetime import datetime
 from src.auth.models import UserRole
-from typing import Optional, Dict
+from typing import Dict
+from typing import Optional
 
 class UserResponse(BaseModel):
     id: UUID
-    avatar_url: Optional[str]
-    name: Optional[str]
-    bio: Optional[str]
+    avatar_url: str | None
+    name: str | None
+    bio: str | None
     nickname: str
-    phone: Optional[str]
-    social_networks: Optional[Dict]
+    phone: str | None
+    social_networks: Dict | None
     role: UserRole
     email: str
     is_active: bool
@@ -24,14 +25,14 @@ class UserResponse(BaseModel):
         from_attributes = True
 
 class UserUpdate(BaseModel):
-    avatar_url: Optional[str] = None
-    name: Optional[str] = None
-    bio: Optional[str] = None
-    nickname: Optional[str] = None
-    phone: Optional[str] = None
-    social_networks: Optional[Dict] = None
-    email: Optional[str] = None
-    is_active: Optional[bool] = None
-    visit_count: Optional[int] = None
-    last_seen: Optional[datetime] = None
-    role: Optional[UserRole] = None
+    avatar_url: str | None = None
+    name: str | None = None
+    bio: str | None = None
+    nickname: str | None = None
+    phone: str | None = None
+    social_networks: Dict | None = None
+    email: str | None = None
+    is_active: bool | None = None
+    visit_count: int | None = None
+    last_seen: datetime | None = None
+    role: UserRole | None
