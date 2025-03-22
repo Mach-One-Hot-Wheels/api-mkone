@@ -12,58 +12,33 @@ from src.auth.utils import (
     generate_payload,
     decode_jwt,
 )
+from src.auth.service import AuthenticationService
+from src.auth.dependencies import get_auth_service
 
 security = HTTPBearer()
 router = APIRouter()
 
-
-
-
 @router.post("/register", response_model=TokenResponse)
 def register(
-    user: UserRegister, session: Session = Depends(get_session)
+    user: UserRegister,
+    auth_service: AuthenticationService = Depends(get_auth_service)
 ):
-    result = session.execute(select(User).where(User.email == user.email)).first()
-    if result:
-        raise HTTPException(status_code=409, detail="E-mail já cadastrado.")
-
-    result2 = session.execute(
-        select(User).where(User.nickname == user.nickname)
-    ).first()
-    if result2:
-        raise HTTPException(status_code=409, detail="Apelido já cadastrado.")
-
-    user.password = hash_password(user.password)
-
-    user_db = User(**user.model_dump())
-    session.add(user_db)
-    session.commit()
-    session.refresh(user_db)
-
-    payload = generate_payload(user_db)
-    token = encode_jwt(payload)
-
+    user_db, token = auth_service.register(user)
     return {
         "user": UserPublic(id=user_db.id, email=user_db.email, nickname=user_db.nickname),
         "token": token
     }
 
-
 @router.post("/login", response_model=TokenResponse)
-def login(user: UserLogin, session: Session = Depends(get_session)):
-    statement = select(User).where(User.email == user.email)
-    user_db = session.execute(statement).scalars().first()
-
-    if user_db and verify_password(user.password, user_db.password):
-        payload = generate_payload(user_db)
-        token = encode_jwt(payload)
-
-        return {
-            "user": UserPublic(id=user_db.id, email=user_db.email, nickname=user_db.nickname),
-            "token": token
-        }
-
-    raise HTTPException(status_code=401, detail="E-mail e/ou senha inválidas.")
+def login(
+    user: UserLogin,
+    auth_service: AuthenticationService = Depends(get_auth_service)
+):
+    user_db, token = auth_service.login(user)
+    return {
+        "user": UserPublic(id=user_db.id, email=user_db.email, nickname=user_db.nickname),
+        "token": token
+    }
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
@@ -90,7 +65,9 @@ async def get_current_user(
 
 
 @router.get("/me", response_model=UserPublic)
-async def get_me(current_user: User = Depends(get_current_user)):
+async def get_me(
+    current_user: User = Depends(get_current_user)
+):
     return UserPublic(
         id=current_user.id, email=current_user.email, nickname=current_user.nickname
     )
