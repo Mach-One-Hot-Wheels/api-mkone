@@ -8,9 +8,11 @@ from src.user_hotwheels.schemas import (
     UserHotwheelsUpdate,
     HotwheelsCardInfo,
     UserHotwheelsCardListResponse,
+    HotwheelsSellersResponse,
 )
-from src.user_hotwheels.models import UserHotwheels
+from src.user_hotwheels.models import UserHotwheels, UserHotwheelsModality
 from src.hotwheels.models import Hotwheels
+from src.auth.models import User
 from src.database import get_session
 from uuid import UUID
 
@@ -235,5 +237,71 @@ async def get_user_hotwheels_cards(
             "visit_count": user_hw.visit_count,
         }
         items.append(card_info)
+    
+    return {"total": total, "items": items}
+
+
+@router.get("/hotwheels/{hotwheels_id}/sellers", response_model=HotwheelsSellersResponse)
+async def get_hotwheels_sellers(
+    hotwheels_id: UUID,
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(get_session),
+):
+    """
+    Get all sellers for a specific Hotwheels model.
+    Returns seller information with pricing details.
+    """
+    # Check if the hotwheels exists
+    hotwheels = db.query(Hotwheels).filter(Hotwheels.id == hotwheels_id).first()
+    if not hotwheels:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Hotwheels not found",
+        )
+    
+    # Query users who have this hotwheels with modality=SALE
+    query = (
+        db.query(
+            UserHotwheels.user_id,
+            UserHotwheels.price,
+            UserHotwheels.is_negotiable,
+            UserHotwheels.description,
+            UserHotwheels.quantity,
+            UserHotwheels.sold,
+            User.nickname,
+            User.avatar_url,
+            User.state,
+            User.city,
+            User.cep,
+        )
+        .join(User, UserHotwheels.user_id == User.id)
+        .filter(
+            UserHotwheels.hotwheels_id == hotwheels_id,
+            UserHotwheels.modality == UserHotwheelsModality.SALE,
+            User.is_active == True
+        )
+    )
+    
+    total = query.count()
+    results = query.offset(skip).limit(limit).all()
+    
+    # Format the results
+    items = []
+    for result in results:
+        seller_info = {
+            "user_id": result.user_id,
+            "nickname": result.nickname,
+            "avatar_url": result.avatar_url,
+            "price": result.price,
+            "is_negotiable": result.is_negotiable,
+            "description": result.description,
+            "state": result.state,
+            "city": result.city,
+            "cep": result.cep,
+            "quantity": result.quantity,
+            "sold": result.sold,
+        }
+        items.append(seller_info)
     
     return {"total": total, "items": items}

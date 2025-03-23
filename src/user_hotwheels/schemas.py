@@ -65,3 +65,23 @@ class HotwheelsCardInfo(BaseModel):
 class UserHotwheelsCardListResponse(BaseModel):
     total: int
     items: list[HotwheelsCardInfo]
+
+class HotwheelsSeller(BaseModel):
+    user_id: UUID
+    nickname: str
+    avatar_url: str | None = None
+    price: Decimal
+    is_negotiable: bool
+    description: str | None = None
+    state: str | None = None
+    city: str | None = None
+    cep: str | None = None
+    quantity: int
+    sold: bool
+    
+    class Config:
+        from_attributes = True
+
+class HotwheelsSellersResponse(BaseModel):
+    total: int
+    items: list[HotwheelsSeller]
